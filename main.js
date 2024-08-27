@@ -7,7 +7,7 @@ const preview = document.getElementById("preview");
 const container = document.getElementById("container");
 let someText;
 const fr = new FileReader();
-
+//test 1
 fileInput.addEventListener("change", clickHandler);
 dropbox.addEventListener("click", () => {
   fileInput.click();
