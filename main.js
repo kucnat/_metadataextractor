@@ -7,7 +7,6 @@ const preview = document.getElementById("preview");
 const container = document.getElementById("container");
 let someText;
 const fr = new FileReader();
-//Test czy to ejst dev branch
 fileInput.addEventListener("change", clickHandler);
 dropbox.addEventListener("click", () => {
   fileInput.click();
