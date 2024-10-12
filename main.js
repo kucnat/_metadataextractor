@@ -1,3 +1,4 @@
+// Git test update #2
 const fileInput = document.getElementById("fileInput");
 const content = document.getElementById("content");
 const dropbox = document.getElementById("dropbox");
