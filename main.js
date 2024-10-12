@@ -1,4 +1,4 @@
-// Git test update #2
+// Git test update #3
 const fileInput = document.getElementById("fileInput");
 const content = document.getElementById("content");
 const dropbox = document.getElementById("dropbox");
