@@ -1,4 +1,4 @@
-// Git test update #3
+//This is still dev branch
 const fileInput = document.getElementById("fileInput");
 const content = document.getElementById("content");
 const dropbox = document.getElementById("dropbox");
