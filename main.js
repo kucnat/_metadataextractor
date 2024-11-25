@@ -11,6 +11,9 @@ fileInput.addEventListener("change", clickHandler);
 dropbox.addEventListener("click", () => {
   fileInput.click();
 });
+pictureBox.addEventListener("click", () => {
+  fileInput.click();
+});
 function dragOverHandler(e) {
   console.log("File(s) in drop zone");
   // Prevent default behavior (Prevent file from being opened)

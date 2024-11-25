@@ -17,7 +17,7 @@
         <label for="fileInput" style="position: absolute;" onclick="event.stopPropagation();">Drop File Here</label>
         <!-- <pre id="fileDisplayArea"></pre> -->
       </div>
-      <div id="pictureBox" class="box">
+      <div id="pictureBox" class="box" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
         <img src="" id="preview" height="600px" width="600px" />
       </div>
       <div id="textBox" class="box"></div>
