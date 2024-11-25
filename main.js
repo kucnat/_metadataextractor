@@ -1,4 +1,3 @@
-//This is still dev branch
 const fileInput = document.getElementById("fileInput");
 const content = document.getElementById("content");
 const dropbox = document.getElementById("dropbox");
@@ -10,6 +9,9 @@ let someText;
 const fr = new FileReader();
 fileInput.addEventListener("change", clickHandler);
 dropbox.addEventListener("click", () => {
+  fileInput.click();
+});
+pictureBox.addEventListener("click", () => {
   fileInput.click();
 });
 function dragOverHandler(e) {
