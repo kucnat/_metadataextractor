@@ -30,8 +30,8 @@ function dropHandler(e) {
 
 function clickHandler() {
   fr.readAsText(fileInput.files[0]);
-
   whenLoaded(fileInput.files[0]);
+
   // fr.readAsDataURL(fileInput.files[0]);
   // fr.onload = function () {
   //   preview.src = fr.result;
@@ -40,7 +40,7 @@ function clickHandler() {
 function whenLoaded(fil) {
   fr.onload = function () {
     // someText = fr.result;
-    someText = "Hello world"; //zmienić po testach
+    someText = ""; //zmienić po testach
     //content.textContent = someText;
     changeStyle();
     checkComfy(fr.result);
@@ -59,12 +59,24 @@ function changeStyle() {
 //^ bedzie potrzebne pozniej
 function checkComfy(text) {
   markerStart = 'inputs": {"text": "';
+  let posBegin = 0;
+  let posEnd = 0;
   if (text.includes(markerStart)) {
-    let promptBegin = text.indexOf('inputs": {"text": "');
-    let promptEnd = text.indexOf('", "clip": [');
-
+    let promptBlockCount = text.match(/inputs": {"text": "/g).length;
+    console.log(promptBlockCount);
+    for (let i = 0; i < promptBlockCount; i++) {
+      let promptBegin = text.indexOf('inputs": {"text": "', posBegin);
+      let promptEnd = text.indexOf('",', promptBegin);
+      someText +=
+        "Prompt " +
+        (i + 1) +
+        ":\n" +
+        text.slice(promptBegin + markerStart.length, promptEnd) +
+        "\n\n";
+      posBegin = promptBegin + markerStart.length;
+      posEnd = promptEnd + '",'.length;
+    }
     console.log("it's comfy!");
-    someText = text.slice(promptBegin + markerStart.length, promptEnd);
   } else {
     console.log("not comfy");
     someText = "not comfy!";
