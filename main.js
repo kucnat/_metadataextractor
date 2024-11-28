@@ -45,6 +45,7 @@ function whenLoaded(fil) {
     changeStyle();
     checkComfy(fr.result);
     textBox.textContent = someText;
+
     preview.src = URL.createObjectURL(fil);
   };
 }
@@ -54,9 +55,6 @@ function changeStyle() {
   pictureBox.style.display = "inline-flex";
   textBox.style.display = "initial";
 }
-//inputs": {"text": "
-//", "clip": [
-//^ bedzie potrzebne pozniej
 function checkComfy(text) {
   markerStart = 'inputs": {"text": "';
   let posBegin = 0;
@@ -66,19 +64,28 @@ function checkComfy(text) {
     console.log(promptBlockCount);
     for (let i = 0; i < promptBlockCount; i++) {
       let promptBegin = text.indexOf('inputs": {"text": "', posBegin);
-      let promptEnd = text.indexOf('",', promptBegin);
+      let promptEnd = text.indexOf('"', promptBegin + markerStart.length);
       someText +=
         "Prompt " +
         (i + 1) +
-        ":\n" +
+        "\n" +
         text.slice(promptBegin + markerStart.length, promptEnd) +
         "\n\n";
       posBegin = promptBegin + markerStart.length;
-      posEnd = promptEnd + '",'.length;
+      posEnd = promptEnd + '"'.length;
     }
+    someText = unicodeToChar(someText);
+    someText = someText.replace(/\\n/g, "\n");
+
     console.log("it's comfy!");
   } else {
     console.log("not comfy");
     someText = "not comfy!";
   }
+}
+function unicodeToChar(text) {
+  //replaces unicode with characters
+  return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
+    return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+  });
 }
