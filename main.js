@@ -5,7 +5,7 @@ const textBox = document.getElementById("textBox");
 const pictureBox = document.getElementById("pictureBox");
 const preview = document.getElementById("preview");
 const container = document.getElementById("container");
-let someText;
+
 const fr = new FileReader();
 fileInput.addEventListener("change", clickHandler);
 dropbox.addEventListener("click", () => {
@@ -39,12 +39,11 @@ function clickHandler() {
 }
 function whenLoaded(fil) {
   fr.onload = function () {
-    // someText = fr.result;
-    someText = ""; //zmienić po testach
-    //content.textContent = someText;
     changeStyle();
-    checkComfy(fr.result);
-    wildcardCheckComfy(fr.result);
+    let someText = checkComfy(fr.result);
+    someText += wildcardCheckComfy(fr.result);
+    someText = unicodeToChar(someText);
+    someText = someText.replace(/\\n/g, "\n");
     textBox.textContent = someText;
 
     preview.src = URL.createObjectURL(fil);
@@ -58,31 +57,28 @@ function changeStyle() {
 }
 function checkComfy(text) {
   markerStart = 'inputs": {"text": "';
+  let prompt = "";
   let posBegin = 0;
   let posEnd = 0;
-  if (text.includes(markerStart)) {
-    let promptBlockCount = text.match(/inputs": {"text": "/g).length;
-    console.log(promptBlockCount);
-    for (let i = 0; i < promptBlockCount; i++) {
-      let promptBegin = text.indexOf('inputs": {"text": "', posBegin);
-      let promptEnd = text.indexOf('"', promptBegin + markerStart.length);
-      someText +=
-        "Prompt " +
-        (i + 1) +
-        "\n" +
-        text.slice(promptBegin + markerStart.length, promptEnd) +
-        "\n\n";
-      posBegin = promptBegin + markerStart.length;
-      posEnd = promptEnd + '"'.length;
-    }
-    someText = unicodeToChar(someText);
-    someText = someText.replace(/\\n/g, "\n");
-
-    console.log("it's comfy!");
-  } else {
-    console.log("not comfy");
-    someText = "not comfy!";
+  let promptBegin = text.indexOf('inputs": {"text": "', posBegin);
+  if (promptBegin === -1) return "not comfy";
+  let promptEnd = text.indexOf('"', promptBegin + markerStart.length);
+  if (promptEnd === -1) return "cand find end of prompt";
+  let promptBlockCount = text.match(/inputs": {"text": "/g).length;
+  if (promptBlockCount === -1) return "not comfy";
+  console.log(promptBlockCount);
+  for (let i = 0; i < promptBlockCount; i++) {
+    prompt +=
+      "Prompt " +
+      (i + 1) +
+      "\n" +
+      text.slice(promptBegin + markerStart.length, promptEnd) +
+      "\n\n";
+    posBegin = promptBegin + markerStart.length;
+    posEnd = promptEnd + '"'.length;
   }
+  console.log("it's comfy!");
+  return prompt;
 }
 function unicodeToChar(text) {
   //replaces unicode with characters
@@ -93,12 +89,13 @@ function unicodeToChar(text) {
 function wildcardCheckComfy(text) {
   const markerStart = 'populated_text": "';
   let promptBegin = text.indexOf(markerStart);
+  if (promptBegin === -1) return "";
   let promptEnd = text.indexOf('"', promptBegin + markerStart.length);
-  if (text.includes(markerStart)) {
-    someText +=
-      "Wildcards: " +
-      "\n" +
-      text.slice(promptBegin + markerStart.length, promptEnd) +
-      "\n\n";
-  }
+  if (promptEnd === -1) return "";
+  return (
+    "Wildcards: " +
+    "\n" +
+    text.slice(promptBegin + markerStart.length, promptEnd) +
+    "\n\n"
+  );
 }
