@@ -5,4 +5,5 @@ This is as practice project I work on to learn more about HTML, CSS and JavaScri
 
 **TO DO:**
 -change how *someText* (global variable) is handled;
+
 -change text extraction to JSON.parse (maybe);
