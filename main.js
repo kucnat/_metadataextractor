@@ -44,6 +44,7 @@ function whenLoaded(fil) {
     //content.textContent = someText;
     changeStyle();
     checkComfy(fr.result);
+    wildcardCheckComfy(fr.result);
     textBox.textContent = someText;
 
     preview.src = URL.createObjectURL(fil);
@@ -88,4 +89,16 @@ function unicodeToChar(text) {
   return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
     return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
   });
+}
+function wildcardCheckComfy(text) {
+  const markerStart = 'populated_text": "';
+  let promptBegin = text.indexOf(markerStart);
+  let promptEnd = text.indexOf('"', promptBegin + markerStart.length);
+  if (text.includes(markerStart)) {
+    someText +=
+      "Wildcards: " +
+      "\n" +
+      text.slice(promptBegin + markerStart.length, promptEnd) +
+      "\n\n";
+  }
 }
