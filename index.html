@@ -9,19 +9,39 @@
 
   <body>
     <div id="container">
-      <div id="dropbox" class="box" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+      <div
+        id="dropbox"
+        class="box"
+        ondrop="dropHandler(event);"
+        ondragover="dragOverHandler(event);"
+      >
         <!-- initial box -->
         <!-- <input type="file" id="fileInput" title="Upload" style="opacity: 0.0; position: relative; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;" /> -->
-        <input type="file" id="fileInput" title="Upload" style="display: none;" />
+        <input
+          type="file"
+          id="fileInput"
+          title="Upload"
+          style="display: none"
+        />
 
-        <label for="fileInput" style="position: absolute;" onclick="event.stopPropagation();">Drop File Here</label>
+        <label
+          for="fileInput"
+          style="position: absolute"
+          onclick="event.stopPropagation();"
+          >Drop File Here</label
+        >
         <!-- <pre id="fileDisplayArea"></pre> -->
       </div>
-      <div id="pictureBox" class="box" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+      <div
+        id="pictureBox"
+        class="box"
+        ondrop="dropHandler(event);"
+        ondragover="dragOverHandler(event);"
+      >
         <img src="" id="preview" height="600px" width="600px" />
       </div>
       <div id="textBox" class="box"></div>
-    </main>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>
